@@ -1,4 +1,4 @@
-package com.example.fintech.web.dto.reqeust;
+package com.example.fintech.api.auth.dto.reqeust;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterRequest {
+public class AuthenticationRequest {
 
 	private String userName;
 

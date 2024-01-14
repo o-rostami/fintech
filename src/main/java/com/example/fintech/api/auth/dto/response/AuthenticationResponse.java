@@ -1,4 +1,4 @@
-package com.example.fintech.web.dto.reqeust;
+package com.example.fintech.api.auth.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,10 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthenticationRequest {
+public class AuthenticationResponse {
 
-	private String userName;
-
-	private String password;
-
+	private String accessToken;
 }

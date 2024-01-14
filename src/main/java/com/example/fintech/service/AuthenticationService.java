@@ -4,9 +4,9 @@ import com.example.fintech.config.JwtService;
 import com.example.fintech.model.user.Role;
 import com.example.fintech.model.user.User;
 import com.example.fintech.model.user.dao.UserRepository;
-import com.example.fintech.web.dto.reqeust.AuthenticationRequest;
-import com.example.fintech.web.dto.reqeust.RegisterRequest;
-import com.example.fintech.web.dto.response.AuthenticationResponse;
+import com.example.fintech.api.auth.dto.reqeust.AuthenticationRequest;
+import com.example.fintech.api.auth.dto.reqeust.RegisterRequest;
+import com.example.fintech.api.auth.dto.response.AuthenticationResponse;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.security.authentication.AuthenticationManager;
@@ -30,7 +30,7 @@ public class AuthenticationService {
 		var user = User.builder().userName(request.getUserName()).password(passwordEncoder.encode(request.getPassword())).role(Role.USER).build();
 		userRepository.save(user);
 		var jwtToken = jwtService.generateToken(user);
-		return AuthenticationResponse.builder().token(jwtToken).build();
+		return AuthenticationResponse.builder().accessToken(jwtToken).build();
 	}
 
 	public AuthenticationResponse authenticate(AuthenticationRequest request) {
@@ -41,6 +41,6 @@ public class AuthenticationService {
 		var user=userRepository.findByUserName(request.getUserName()).orElseThrow(()-> new UsernameNotFoundException(
 				"not found"));
 		var jwtToken = jwtService.generateToken(user);
-		return AuthenticationResponse.builder().token(jwtToken).build();
+		return AuthenticationResponse.builder().accessToken(jwtToken).build();
 	}
 }
