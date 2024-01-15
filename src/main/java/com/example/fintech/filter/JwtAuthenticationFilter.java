@@ -1,9 +1,10 @@
-package com.example.fintech.config;
+package com.example.fintech.filter;
 
 import java.io.IOException;
 import java.util.Objects;
 
 import com.example.fintech.service.auth.JwtService;
+import com.example.fintech.service.token.TokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,27 +28,27 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 	private final UserDetailsService userDetailsService;
 
+	private final TokenService tokenService;
+
 	@Override
 	protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
-		final String authHeader = request.getHeader("Authorization");
-		final String jwt;
-		final String userName;
+		final String authHeader = request.getHeader("Authorization"); final String jwt; final String userName;
 		if (Objects.isNull(authHeader) || !authHeader.startsWith("Bearer ")) {
 			filterChain.doFilter(request, response);
 			return;
 		}
-		jwt = authHeader.substring(7);
-		userName = jwtService.extractUserName(jwt);
+		jwt = authHeader.substring(7); userName = jwtService.extractUserName(jwt);
 		if (Objects.nonNull(userName) && Objects.isNull(SecurityContextHolder.getContext().getAuthentication())) {
 			UserDetails userDetails = this.userDetailsService.loadUserByUsername(userName);
-			if (jwtService.isTokenValid(jwt, userDetails)) {
-				UsernamePasswordAuthenticationToken authenticationToken =
-						new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
+			var isTokenValid =
+					tokenService.findByToken(jwt).map(item -> !item.isExpired() && !item.isRevoked()).orElse(false);
+			if (jwtService.isTokenValid(jwt, userDetails) && isTokenValid) {
+				UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 				authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 				SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 			}
 
 		}
-		filterChain.doFilter(request,response);
+		filterChain.doFilter(request, response);
 	}
 }

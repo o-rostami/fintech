@@ -1,5 +1,7 @@
 package com.example.fintech.service.token;
 
+import java.util.Optional;
+
 import com.example.fintech.model.token.Token;
 import com.example.fintech.model.token.TokenType;
 import com.example.fintech.model.token.dao.TokenRepository;
@@ -20,14 +22,19 @@ public class TokenService {
 	}
 
 	public void revokeAllUserToken(User user) {
-		var validUserTokens = tokenRepository.findAllValidTokensByUser(user.getId());
-		if(validUserTokens.isEmpty()){
+		var validUserTokens = tokenRepository.findAllValidTokensByUser(user.getId()); if (validUserTokens.isEmpty()) {
 			return;
-		}
-		validUserTokens.forEach(item->{
-			item.setExpired(true);
-			item.setRevoked(true);
-		});
-		tokenRepository.saveAll(validUserTokens);
+		} validUserTokens.forEach(item -> {
+			item.setExpired(true); item.setRevoked(true);
+		}); tokenRepository.saveAll(validUserTokens);
+	}
+
+	public Optional<Token> findByToken(String jwtToken) {
+		return tokenRepository.findByToken(jwtToken);
+	}
+
+
+	public void save(Token storedToken) {
+		tokenRepository.save(storedToken);
 	}
 }
