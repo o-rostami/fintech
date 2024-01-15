@@ -1,4 +1,4 @@
-package com.example.fintech.config;
+package com.example.fintech.service.auth;
 
 import java.security.Key;
 import java.util.Date;

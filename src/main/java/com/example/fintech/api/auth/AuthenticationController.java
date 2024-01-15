@@ -3,7 +3,7 @@ package com.example.fintech.api.auth;
 import com.example.fintech.api.auth.dto.reqeust.AuthenticationRequest;
 import com.example.fintech.api.auth.dto.reqeust.RegisterRequest;
 import com.example.fintech.api.auth.dto.response.AuthenticationResponse;
-import com.example.fintech.service.AuthenticationService;
+import com.example.fintech.service.auth.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;

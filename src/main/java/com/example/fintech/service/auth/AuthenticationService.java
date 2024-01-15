@@ -1,12 +1,15 @@
-package com.example.fintech.service;
+package com.example.fintech.service.auth;
 
-import com.example.fintech.config.JwtService;
+import com.example.fintech.model.token.Token;
+import com.example.fintech.model.token.TokenType;
+import com.example.fintech.model.token.dao.TokenRepository;
 import com.example.fintech.model.user.Role;
 import com.example.fintech.model.user.User;
 import com.example.fintech.model.user.dao.UserRepository;
 import com.example.fintech.api.auth.dto.reqeust.AuthenticationRequest;
 import com.example.fintech.api.auth.dto.reqeust.RegisterRequest;
 import com.example.fintech.api.auth.dto.response.AuthenticationResponse;
+import com.example.fintech.service.token.TokenService;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,11 +28,13 @@ public class AuthenticationService {
 
 	private final JwtService jwtService;
 	private final AuthenticationManager authenticationManager;
+	private final TokenService tokenService;
 
 	public AuthenticationResponse register(RegisterRequest request) {
 		var user = User.builder().userName(request.getUserName()).password(passwordEncoder.encode(request.getPassword())).role(Role.USER).build();
-		userRepository.save(user);
+		var savedUser=userRepository.save(user);
 		var jwtToken = jwtService.generateToken(user);
+		tokenService.saveUserToken(savedUser,jwtToken);
 		return AuthenticationResponse.builder().accessToken(jwtToken).build();
 	}
 
@@ -41,6 +46,8 @@ public class AuthenticationService {
 		var user=userRepository.findByUserName(request.getUserName()).orElseThrow(()-> new UsernameNotFoundException(
 				"not found"));
 		var jwtToken = jwtService.generateToken(user);
+		tokenService.revokeAllUserToken(user);
+		tokenService.saveUserToken(user,jwtToken);
 		return AuthenticationResponse.builder().accessToken(jwtToken).build();
 	}
 }

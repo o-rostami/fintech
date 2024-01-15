@@ -3,6 +3,7 @@ package com.example.fintech.config;
 import java.io.IOException;
 import java.util.Objects;
 
+import com.example.fintech.service.auth.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
