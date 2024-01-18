@@ -22,11 +22,14 @@ public class TokenService {
 	}
 
 	public void revokeAllUserToken(User user) {
-		var validUserTokens = tokenRepository.findAllValidTokensByUser(user.getId()); if (validUserTokens.isEmpty()) {
+		var validUserTokens = tokenRepository.findAllValidTokensByUser(user.getId());
+		if (validUserTokens.isEmpty()) {
 			return;
-		} validUserTokens.forEach(item -> {
+		}
+		validUserTokens.forEach(item -> {
 			item.setExpired(true); item.setRevoked(true);
-		}); tokenRepository.saveAll(validUserTokens);
+		});
+		tokenRepository.saveAll(validUserTokens);
 	}
 
 	public Optional<Token> findByToken(String jwtToken) {

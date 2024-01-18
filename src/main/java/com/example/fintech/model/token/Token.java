@@ -3,6 +3,7 @@ package com.example.fintech.model.token;
 
 import java.util.Date;
 
+import com.example.fintech.model.Auditable;
 import com.example.fintech.model.user.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -28,10 +29,10 @@ import org.hibernate.annotations.UpdateTimestamp;
 @AllArgsConstructor
 @Entity
 @Table(name = "tbl_token", indexes = { @Index(name = "token", columnList = "token") })
-public class Token {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+public class Token extends Auditable {
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//	private Integer id;
 
 	private String token;
 
@@ -49,11 +50,11 @@ public class Token {
 	@Version
 	private Long version;
 
-	@CreationTimestamp
-	private Date createdAt;
-
-	@UpdateTimestamp
-	private Date updatedAt;
+//	@CreationTimestamp
+//	private Date createdAt;
+//
+//	@UpdateTimestamp
+//	private Date updatedAt;
 
 
 }

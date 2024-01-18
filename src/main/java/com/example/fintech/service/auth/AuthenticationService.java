@@ -37,7 +37,8 @@ public class AuthenticationService {
 	private final TokenService tokenService;
 
 	public AuthenticationResponse register(RegisterRequest request) {
-		var user = User.builder().userName(request.getUserName()).password(passwordEncoder.encode(request.getPassword())).role(Role.USER).build();
+		var user =
+				User.builder().userName(request.getUserName()).password(passwordEncoder.encode(request.getPassword())).role(Role.USER).build();
 		var savedUser = userRepository.save(user);
 		var jwtToken = jwtService.generateToken(user);
 		var refreshToken = jwtService.generateRefreshToken(user);

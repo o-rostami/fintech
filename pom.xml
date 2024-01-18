@@ -17,6 +17,7 @@
 		<java.version>17</java.version>
 		<mapstruct.version>1.4.2.Final</mapstruct.version>
 		<lombok-mapstruct>0.2.0</lombok-mapstruct>
+		<open-api.version>2.0.3</open-api.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -87,6 +88,11 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok-mapstruct-binding</artifactId>
 			<version>${lombok-mapstruct}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>${open-api.version}</version>
 		</dependency>
 	</dependencies>
 
