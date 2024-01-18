@@ -1,4 +1,4 @@
-package com.example.fintech.api.category.response;
+package com.example.fintech.api.response;
 
 import com.example.fintech.api.BaseResponse;
 import lombok.Data;

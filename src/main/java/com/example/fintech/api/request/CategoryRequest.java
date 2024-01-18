@@ -1,4 +1,4 @@
-package com.example.fintech.api.category.request;
+package com.example.fintech.api.request;
 
 import com.example.fintech.api.BaseRequest;
 import jakarta.validation.constraints.NotBlank;

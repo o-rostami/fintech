@@ -1,7 +1,7 @@
-package com.example.fintech.api.category.mapper;
+package com.example.fintech.api.mapper;
 
-import com.example.fintech.api.category.request.CategoryRequest;
-import com.example.fintech.api.category.response.CategoryResponse;
+import com.example.fintech.api.request.CategoryRequest;
+import com.example.fintech.api.response.CategoryResponse;
 import com.example.fintech.model.category.Category;
 import org.mapstruct.Mapper;
 
