@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/demo/admin")
+@RequestMapping("/category/admin")
 @PreAuthorize("hasRole('ADMIN')")
-public class AdminController {
+public class CategoryController {
 
 	@GetMapping
 	@PreAuthorize("hasAuthority('admin:read')")

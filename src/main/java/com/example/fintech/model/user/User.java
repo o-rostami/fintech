@@ -35,11 +35,8 @@ public class User extends Auditable implements UserDetails {
 	@Column(unique = true, updatable = false, nullable = false)
 	private String userName;
 
-	@ToString.Exclude
+//	@ToString.Exclude
 	private String password;
-
-	@Version
-	private Long version;
 
 	@Enumerated(EnumType.STRING)
 	private Role role;

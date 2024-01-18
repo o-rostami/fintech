@@ -15,6 +15,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
+import jakarta.persistence.Version;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -39,6 +40,9 @@ public class Auditable {
 
 	@Column(name = "last_modified_date")
 	private Long lastModifiedDate;
+
+	@Version
+	private Long version;
 
 	@PrePersist
 	public void onPrePersist() {

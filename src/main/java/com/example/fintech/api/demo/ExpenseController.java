@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/demo/user")
 @PreAuthorize("hasRole('USER')")
-public class UserController {
+public class ExpenseController {
 
 	@GetMapping
 	@PreAuthorize("hasAuthority('user:read')")

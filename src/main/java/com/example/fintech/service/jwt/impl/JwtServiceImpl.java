@@ -1,4 +1,4 @@
-package com.example.fintech.service.auth;
+package com.example.fintech.service.jwt.impl;
 
 import java.security.Key;
 import java.util.Date;
@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import com.example.fintech.service.jwt.JwtService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -17,7 +18,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 @Service
-public class JwtService {
+public class JwtServiceImpl implements JwtService {
 
 	@Value("${application.security.jwt.secret-key}")
 	private String secretKey;
@@ -28,10 +29,12 @@ public class JwtService {
 	@Value("${application.security.jwt.refresh-token.expiration}")
 	private long refreshExpiration;
 
+	@Override
 	public String extractUserName(String token) {
 		return extractClaim(token, Claims::getSubject);
 	}
 
+	@Override
 	public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
 		final Claims claims = extractAllClaims(token); return claimsResolver.apply(claims);
 	}
@@ -40,19 +43,23 @@ public class JwtService {
 		return Jwts.builder().setClaims(extraClaims).setSubject(userDetails.getUsername()).setIssuedAt(new Date(System.currentTimeMillis())).setExpiration(new Date(System.currentTimeMillis() + expiration)).signWith(getSignInKey(), SignatureAlgorithm.HS256).compact();
 	}
 
+	@Override
 	public String generateRefreshToken(UserDetails userDetails) {
 		return buildToken(new HashMap<>(), userDetails, refreshExpiration);
 	}
 
 
+	@Override
 	public String generateToken(UserDetails userDetails) {
 		return generateToken(new HashMap<>(), userDetails);
 	}
 
+	@Override
 	public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
 		return buildToken(extraClaims, userDetails, jwtExpiration);
 	}
 
+	@Override
 	public boolean isTokenValid(String token, UserDetails userDetails) {
 		final String username = extractUserName(token);
 		return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);

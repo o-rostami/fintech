@@ -1,4 +1,4 @@
-package com.example.fintech.service.auth;
+package com.example.fintech.service.logout.impl;
 
 
 import java.util.Objects;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class LogoutService implements LogoutHandler {
+public class LogoutServiceImpl implements LogoutHandler {
 
 	private final TokenService tokenService;
 

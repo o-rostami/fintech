@@ -9,6 +9,7 @@ import com.example.fintech.api.auth.dto.response.AuthenticationResponse;
 import com.example.fintech.model.user.Role;
 import com.example.fintech.model.user.User;
 import com.example.fintech.model.user.dao.UserRepository;
+import com.example.fintech.service.jwt.JwtService;
 import com.example.fintech.service.token.TokenService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,7 +25,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class AuthenticationService {
+public class AuthenticationServiceImpl {
 
 	private final UserRepository userRepository;
 

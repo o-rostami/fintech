@@ -3,7 +3,7 @@ package com.example.fintech.filter;
 import java.io.IOException;
 import java.util.Objects;
 
-import com.example.fintech.service.auth.JwtService;
+import com.example.fintech.service.jwt.impl.JwtServiceImpl;
 import com.example.fintech.service.token.TokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -24,7 +24,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-	private final JwtService jwtService;
+	private final JwtServiceImpl jwtServiceImpl;
 
 	private final UserDetailsService userDetailsService;
 
@@ -37,12 +37,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 			filterChain.doFilter(request, response);
 			return;
 		}
-		jwt = authHeader.substring(7); userName = jwtService.extractUserName(jwt);
+		jwt = authHeader.substring(7); userName = jwtServiceImpl.extractUserName(jwt);
 		if (Objects.nonNull(userName) && Objects.isNull(SecurityContextHolder.getContext().getAuthentication())) {
 			UserDetails userDetails = this.userDetailsService.loadUserByUsername(userName);
 			var isTokenValid =
 					tokenService.findByToken(jwt).map(item -> !item.isExpired() && !item.isRevoked()).orElse(false);
-			if (jwtService.isTokenValid(jwt, userDetails) && isTokenValid) {
+			if (jwtServiceImpl.isTokenValid(jwt, userDetails) && isTokenValid) {
 				UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 				authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 				SecurityContextHolder.getContext().setAuthentication(authenticationToken);
