@@ -1,4 +1,4 @@
-package com.example.fintech.api.demo;
+package com.example.fintech.api.expense;
 
 import lombok.RequiredArgsConstructor;
 
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/demo/user")
+@RequestMapping("/expense/user")
 @PreAuthorize("hasRole('USER')")
 public class ExpenseController {
 
