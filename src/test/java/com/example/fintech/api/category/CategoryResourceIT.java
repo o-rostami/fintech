@@ -1,4 +1,4 @@
-package com.example.fintech.controller.category;
+package com.example.fintech.api.category;
 
 import com.example.fintech.api.CategoryController;
 import com.example.fintech.service.category.CategoryService;
