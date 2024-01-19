@@ -28,18 +28,18 @@ public class AuthenticationControllerTest {
 
 
 	@Autowired
-	private TestRestTemplate template;
+	private TestRestTemplate restTemplate;
 
 	@Autowired
 	UserRepository userRepository;
 
 	@Test
-	@DisplayName("register - register user and get access token with refresh token")
+	@DisplayName("register - register user with user role and get access token with refresh token")
 	public void register_0() {
 		RegisterRequest request = RegisterRequest.builder().userName("t1").password("p").build();
 		HttpHeaders headers = new HttpHeaders(); ;
 		HttpEntity<RegisterRequest> entity = new HttpEntity<>(request, headers);
-		ResponseEntity<AuthenticationResponse> response = template.exchange(
+		ResponseEntity<AuthenticationResponse> response = restTemplate.exchange(
 				"/auth/register", HttpMethod.POST, entity, AuthenticationResponse.class);
 		assertThat(response).isNotNull();
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -57,15 +57,15 @@ public class AuthenticationControllerTest {
 	}
 
 	@Test
-	@DisplayName("register - register user with already existed user name so that the forbidden error return")
+	@DisplayName("register - register user with already existed user name so that the error return")
 	public void register_1() {
 		RegisterRequest request = RegisterRequest.builder().userName("test").password("password").build();
 		HttpHeaders headers = new HttpHeaders(); ;
 		HttpEntity<RegisterRequest> entity = new HttpEntity<>(request, headers);
-		ResponseEntity<AuthenticationResponse> response = template.exchange(
+		ResponseEntity<AuthenticationResponse> response = restTemplate.exchange(
 				"/auth/register", HttpMethod.POST, entity, AuthenticationResponse.class);
 		assertThat(response).isNotNull();
-		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
 		assertThat(response.getBody()).isNull();
 	}
 
@@ -76,7 +76,7 @@ public class AuthenticationControllerTest {
 		RegisterRequest request = RegisterRequest.builder().userName("test").password("password").build();
 		HttpHeaders headers = new HttpHeaders(); ;
 		HttpEntity<RegisterRequest> entity = new HttpEntity<>(request, headers);
-		ResponseEntity<AuthenticationResponse> response = template.exchange(
+		ResponseEntity<AuthenticationResponse> response = restTemplate.exchange(
 				"/auth/authenticate", HttpMethod.POST, entity, AuthenticationResponse.class);
 		assertThat(response).isNotNull();
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);

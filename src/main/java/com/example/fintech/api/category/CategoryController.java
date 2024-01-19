@@ -1,4 +1,4 @@
-package com.example.fintech.api;
+package com.example.fintech.api.category;
 
 import com.example.fintech.api.mapper.CategoryControllerMapper;
 import com.example.fintech.api.request.CategoryRequest;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/category/admin")
+@RequestMapping("/admin/category")
 @PreAuthorize("hasRole('ADMIN')")
 @Slf4j
 public class CategoryController {
@@ -30,7 +30,7 @@ public class CategoryController {
 
 	@GetMapping(path = "/{categoryId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasAuthority('admin:read')")
-	public ResponseEntity<CategoryResponse> get(@PathVariable Long categoryId) {
+		public ResponseEntity<CategoryResponse> getCategory(@PathVariable Long categoryId) {
 		log.info("got request with id: {}", categoryId);
 		var result = categoryService.getCategory(categoryId);
 		log.info("category created successfully with: {}", result);
@@ -39,7 +39,7 @@ public class CategoryController {
 
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasAuthority('admin:create')")
-	public ResponseEntity<CategoryResponse> create(@RequestBody CategoryRequest request) {
+	public ResponseEntity<CategoryResponse> createCategory(@RequestBody CategoryRequest request) {
 		log.info("got create request with: {}", request);
 		var result = categoryService.create(mapper.toCategory(request));
 		log.info("category created successfully with: {}", result);
