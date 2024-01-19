@@ -1,5 +1,7 @@
 package com.example.fintech.service.expense.request;
 
+import java.util.Date;
+
 import lombok.Data;
 
 @Data
@@ -13,5 +15,5 @@ public class ExpenseInitModel {
 
 	private String description;
 
-	private Long effectiveDate;
+	private Date effectiveDate;
 }

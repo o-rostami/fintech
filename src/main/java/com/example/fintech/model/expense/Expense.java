@@ -1,6 +1,8 @@
 package com.example.fintech.model.expense;
 
 
+import java.util.Date;
+
 import com.example.fintech.model.Auditable;
 import com.example.fintech.model.category.Category;
 import jakarta.persistence.Entity;
@@ -30,6 +32,6 @@ public class Expense extends Auditable {
 
 	private String description;
 
-	private Long effectiveDate;
+	private Date effectiveDate;
 
 }

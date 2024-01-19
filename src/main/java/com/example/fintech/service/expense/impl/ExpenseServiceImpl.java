@@ -7,8 +7,13 @@ import com.example.fintech.service.expense.mapper.ExpenseServiceMapper;
 import com.example.fintech.service.expense.request.ExpenseInitModel;
 import com.example.fintech.service.expense.response.ExpenseDetailResult;
 import com.example.fintech.service.expense.response.ExpenseInitResult;
+import com.example.fintech.service.expense.response.MonthlyExpenseResult;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,6 +25,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 	private final CategoryService categoryService;
 
 	private final ExpenseServiceMapper expenseServiceMapper;
+
 
 	@Override
 	public ExpenseInitResult addExpense(ExpenseInitModel model) {
@@ -33,4 +39,12 @@ public class ExpenseServiceImpl implements ExpenseService {
 	public ExpenseDetailResult getExpenseDetail(Long expenseId) {
 		return expenseServiceMapper.toExpenseDetailResult(expenseRepository.getReferenceById(expenseId));
 	}
+
+
+	@Override
+	public Page<MonthlyExpenseResult> getReport(Integer pageNum, Integer pageSize) {
+		Pageable page = PageRequest.of(pageNum, pageSize);
+		return expenseRepository.findMonthlyExpenseReports(page);
+	}
+
 }

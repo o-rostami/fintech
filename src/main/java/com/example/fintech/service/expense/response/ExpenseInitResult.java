@@ -1,5 +1,7 @@
 package com.example.fintech.service.expense.response;
 
+import java.util.Date;
+
 import lombok.Data;
 
 @Data
@@ -14,6 +16,6 @@ public class ExpenseInitResult {
 	private Long version;
 	private Long categoryId;
 
-	private Long effectiveDate;
+	private Date effectiveDate;
 
 }

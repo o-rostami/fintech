@@ -1,5 +1,7 @@
 package com.example.fintech.api.expense.request;
 
+import java.util.Date;
+
 import com.example.fintech.api.BaseRequest;
 import lombok.Builder;
 import lombok.Data;
@@ -18,5 +20,5 @@ public class ExpenseRequest extends BaseRequest {
 
 	private String description;
 
-	private Long effectiveDate;
+	private Date effectiveDate;
 }
