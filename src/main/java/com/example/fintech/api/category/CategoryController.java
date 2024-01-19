@@ -32,7 +32,7 @@ public class CategoryController {
 	@PreAuthorize("hasAuthority('admin:read')")
 		public ResponseEntity<CategoryResponse> getCategory(@PathVariable Long categoryId) {
 		log.info("got request with id: {}", categoryId);
-		var result = categoryService.getCategory(categoryId);
+		var result = categoryService.getCategoryDetail(categoryId);
 		log.info("category created successfully with: {}", result);
 		return ResponseEntity.ok(mapper.toCategoryResponse(result));
 	}
@@ -41,7 +41,7 @@ public class CategoryController {
 	@PreAuthorize("hasAuthority('admin:create')")
 	public ResponseEntity<CategoryResponse> createCategory(@RequestBody CategoryRequest request) {
 		log.info("got create request with: {}", request);
-		var result = categoryService.create(mapper.toCategory(request));
+		var result = categoryService.create(mapper.toCategoryInitModel(request));
 		log.info("category created successfully with: {}", result);
 		return ResponseEntity.ok(mapper.toCategoryResponse(result));
 	}
