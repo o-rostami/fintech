@@ -8,7 +8,6 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class ExpenseResponse extends BaseResponse {
 
-
 	private Long id;
 
 	private String title;
