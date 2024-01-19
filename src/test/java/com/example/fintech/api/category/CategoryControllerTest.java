@@ -2,8 +2,8 @@ package com.example.fintech.api.category;
 
 import com.example.fintech.api.auth.dto.reqeust.RegisterRequest;
 import com.example.fintech.api.auth.dto.response.AuthenticationResponse;
-import com.example.fintech.api.request.CategoryRequest;
-import com.example.fintech.api.response.CategoryResponse;
+import com.example.fintech.api.category.request.CategoryRequest;
+import com.example.fintech.api.category.response.CategoryResponse;
 import com.example.fintech.model.category.dao.CategoryRepository;
 import com.example.fintech.model.token.dao.TokenRepository;
 import org.junit.jupiter.api.AfterEach;

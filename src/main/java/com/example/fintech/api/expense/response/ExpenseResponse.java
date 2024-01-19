@@ -1,4 +1,4 @@
-package com.example.fintech.api.response;
+package com.example.fintech.api.expense.response;
 
 import com.example.fintech.api.BaseResponse;
 import lombok.Data;
@@ -6,7 +6,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class CategoryResponse extends BaseResponse {
+public class ExpenseResponse extends BaseResponse {
 
 
 	private Long id;

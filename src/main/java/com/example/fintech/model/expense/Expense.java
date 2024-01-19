@@ -26,8 +26,9 @@ public class Expense extends Auditable {
 	@JoinColumn(name = "category_id", nullable = false)
 	private Category category;
 
-	private String description;
+	private String title;
 
+	private String description;
 
 	private Long effectiveDate;
 

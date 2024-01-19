@@ -1,8 +1,8 @@
 package com.example.fintech.api.category;
 
-import com.example.fintech.api.mapper.CategoryControllerMapper;
-import com.example.fintech.api.request.CategoryRequest;
-import com.example.fintech.api.response.CategoryResponse;
+import com.example.fintech.api.category.mapper.CategoryControllerMapper;
+import com.example.fintech.api.category.request.CategoryRequest;
+import com.example.fintech.api.category.response.CategoryResponse;
 import com.example.fintech.service.category.CategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
