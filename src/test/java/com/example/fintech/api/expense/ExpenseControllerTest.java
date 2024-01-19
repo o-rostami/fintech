@@ -84,6 +84,7 @@ class ExpenseControllerTest {
 		tokenRepository.deleteAll();
 		userRepository.deleteById(userId);
 		expenseRepository.deleteAll();
+		categoryRepository.deleteAll();
 	}
 
 
@@ -158,11 +159,12 @@ class ExpenseControllerTest {
 		assertThat(expenseRepository.findAll()).isNotNull();
 		assertThat(expenseRepository.findAll().size()).isOne();
 
+		var uri="/user/expense/"+expense.getId();
 		HttpHeaders headers = new HttpHeaders(); ;
 		headers.setBearerAuth(accessToken);
 		HttpEntity<ExpenseRequest> entity = new HttpEntity<>(headers);
 		ResponseEntity<ExpenseResponse> response = restTemplate.exchange(
-				"/user/expense/1", HttpMethod.GET, entity, ExpenseResponse.class);
+				uri, HttpMethod.GET, entity, ExpenseResponse.class);
 		assertThat(response).isNotNull();
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 		assertThat(response.getBody()).isNotNull();
