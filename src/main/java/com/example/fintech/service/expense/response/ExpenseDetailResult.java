@@ -3,7 +3,7 @@ package com.example.fintech.service.expense.response;
 import lombok.Data;
 
 @Data
-public class ExpenseInitResult {
+public class ExpenseDetailResult {
 
 	private Long id;
 

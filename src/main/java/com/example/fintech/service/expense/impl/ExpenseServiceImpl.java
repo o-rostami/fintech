@@ -5,6 +5,7 @@ import com.example.fintech.service.category.CategoryService;
 import com.example.fintech.service.expense.ExpenseService;
 import com.example.fintech.service.expense.mapper.ExpenseServiceMapper;
 import com.example.fintech.service.expense.request.ExpenseInitModel;
+import com.example.fintech.service.expense.response.ExpenseDetailResult;
 import com.example.fintech.service.expense.response.ExpenseInitResult;
 import lombok.RequiredArgsConstructor;
 
@@ -26,5 +27,10 @@ public class ExpenseServiceImpl implements ExpenseService {
 		var expense = expenseServiceMapper.toExpense(model);
 		expense.setCategory(category);
 		return expenseServiceMapper.toExpenseInitResult(expenseRepository.save(expense));
+	}
+
+	@Override
+	public ExpenseDetailResult getExpenseDetail(Long expenseId) {
+		return expenseServiceMapper.toExpenseDetailResult(expenseRepository.getReferenceById(expenseId));
 	}
 }

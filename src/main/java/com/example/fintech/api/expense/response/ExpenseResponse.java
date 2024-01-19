@@ -16,4 +16,8 @@ public class ExpenseResponse extends BaseResponse {
 
 	private Long version;
 
+	private Long categoryId;
+
+	private Long effectiveDate;
+
 }

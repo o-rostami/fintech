@@ -1,11 +1,14 @@
 package com.example.fintech.api.expense;
 
+import java.util.Date;
+
 import com.example.fintech.api.auth.dto.reqeust.RegisterRequest;
 import com.example.fintech.api.auth.dto.response.AuthenticationResponse;
 import com.example.fintech.api.expense.request.ExpenseRequest;
 import com.example.fintech.api.expense.response.ExpenseResponse;
 import com.example.fintech.model.category.Category;
 import com.example.fintech.model.category.dao.CategoryRepository;
+import com.example.fintech.model.expense.Expense;
 import com.example.fintech.model.expense.dao.ExpenseRepository;
 import com.example.fintech.model.token.dao.TokenRepository;
 import com.example.fintech.model.user.dao.UserRepository;
@@ -48,6 +51,7 @@ class ExpenseControllerTest {
 	UserRepository userRepository;
 
 	private String accessToken;
+
 	private Long userId;
 
 	@BeforeEach
@@ -67,7 +71,7 @@ class ExpenseControllerTest {
 		assertThat(response.getBody().getAccessToken()).isNotNull();
 		assertThat(response.getBody().getRefreshToken()).isNotNull();
 		accessToken = response.getBody().getAccessToken();
-		userId=userRepository.findByUserName(userName).get().getId();
+		userId = userRepository.findByUserName(userName).get().getId();
 	}
 
 	@AfterEach
@@ -109,7 +113,7 @@ class ExpenseControllerTest {
 		assertThat(categoryRepository.findAll()).isNotNull();
 		assertThat(categoryRepository.findAll().size()).isOne();
 		ExpenseRequest request =
-				ExpenseRequest.builder().title(title).description(desc).amount(1000L).categoryId(category.getId()).build();
+				ExpenseRequest.builder().title(title).description(desc).amount(1000L).effectiveDate(new Date().getTime()).categoryId(category.getId()).build();
 		HttpHeaders headers = new HttpHeaders(); ;
 		headers.setBearerAuth(accessToken);
 		HttpEntity<ExpenseRequest> entity = new HttpEntity<>(request, headers);
@@ -123,6 +127,51 @@ class ExpenseControllerTest {
 		assertThat(response.getBody().getTitle()).isEqualTo(title);
 		assertThat(response.getBody().getDescription()).isNotNull();
 		assertThat(response.getBody().getDescription()).isEqualTo(desc);
+		assertThat(response.getBody().getEffectiveDate()).isNotNull();
+	}
+
+	@Test
+	@DisplayName("getExpense - get expense with wrong id")
+	public void getExpense_0() {
+		HttpHeaders headers = new HttpHeaders(); ;
+		headers.setBearerAuth(accessToken);
+		HttpEntity<ExpenseRequest> entity = new HttpEntity<>(headers);
+		ResponseEntity<ExpenseResponse> response = restTemplate.exchange(
+				"/user/expense/1", HttpMethod.GET, entity, ExpenseResponse.class);
+		assertThat(response).isNotNull();
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+	}
+
+	@Test
+	@DisplayName("getExpense - get expense with wrong id")
+	public void getExpense_1() {
+		String title = "t1";
+		String desc = "desc";
+		Category category = Category.builder().title(title).description(desc).build();
+		categoryRepository.save(category);
+		assertThat(categoryRepository.findAll()).isNotNull();
+		assertThat(categoryRepository.findAll().size()).isOne();
+
+		Expense expense =
+				Expense.builder().amount(1000L).title(title).description(desc).amount(1000L).category(category).effectiveDate(new Date().getTime()).build();
+		expenseRepository.save(expense);
+		assertThat(expenseRepository.findAll()).isNotNull();
+		assertThat(expenseRepository.findAll().size()).isOne();
+
+		HttpHeaders headers = new HttpHeaders(); ;
+		headers.setBearerAuth(accessToken);
+		HttpEntity<ExpenseRequest> entity = new HttpEntity<>(headers);
+		ResponseEntity<ExpenseResponse> response = restTemplate.exchange(
+				"/user/expense/1", HttpMethod.GET, entity, ExpenseResponse.class);
+		assertThat(response).isNotNull();
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+		assertThat(response.getBody()).isNotNull();
+		assertThat(response.getBody().getId()).isNotNull();
+		assertThat(response.getBody().getTitle()).isNotNull();
+		assertThat(response.getBody().getTitle()).isEqualTo(title);
+		assertThat(response.getBody().getDescription()).isNotNull();
+		assertThat(response.getBody().getDescription()).isEqualTo(desc);
+		assertThat(response.getBody().getEffectiveDate()).isNotNull();
 	}
 
 }

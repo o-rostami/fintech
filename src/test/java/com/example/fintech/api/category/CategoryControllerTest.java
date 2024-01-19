@@ -104,7 +104,7 @@ class CategoryControllerTest {
 	}
 
 	@Test
-	@DisplayName("create - get category with user who has admin role with id which doesn't exsit")
+	@DisplayName("create - get category with user who has admin role with category id which doesn't exist")
 	public void getCategory_0() {
 		HttpHeaders headers = new HttpHeaders(); ;
 		headers.setBearerAuth(accessToken);
