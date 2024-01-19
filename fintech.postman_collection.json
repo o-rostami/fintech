@@ -1,0 +1,27 @@
+curl --location 'http://localhost:8080/auth/register' \
+--header 'Content-Type: application/json' \
+--data '{"userName":"omid","password":"test"}'
+
+
+curl --location 'http://localhost:8080/auth/authenticate' \
+--header 'Content-Type: application/json' \
+--data '{"userName":"omid","password":"test"}'
+
+
+curl --location --request POST 'http://localhost:8080/auth/logout' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvbWlkIiwiaWF0IjoxNzA1MzQwNTc5LCJleHAiOjE3MDU0MjY5Nzl9.9TBfECeFQP_XroMUNrwP94w6xpuHrb48qP1OI8kVnkM' \
+--data ''
+
+
+curl --location --request POST 'http://localhost:8080/auth/refresh-token' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvbWlkIiwiaWF0IjoxNzA1MzQwNDY3LCJleHAiOjE3MDU5NDUyNjd9.aeyOy4ZgCs3cLuEom54X_366hc-BR-MzXlnC2lluaYk'
+
+
+curl --location --request POST 'http://localhost:8080/auth'
+
+
+
+curl --location 'http://localhost:8080/user/expense/report?pageNum=0&pageSize=10' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvbWlkIiwiaWF0IjoxNzA1Njg5MDA3LCJleHAiOjE3MDU3NzU0MDd9.RNuZg8FDbQGgMF1T4d9VCPBwkTwn0YdmI0pQ9HEcG6A' \
+--data '{}'
