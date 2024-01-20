@@ -15,11 +15,6 @@ The postman collection including test of every request exists with the name of `
 just run this command to build corresponding image `docker build -t fintech-app .`
 
 
-# Run docker image
-
-run this command `docker run -it -p 8080:8080 fintech-app`
-
-
 # Run docker compose 
 run this command `docker-compose up`  and check the url on
 browser: http://localhost:8080/swagger-ui/index.html to see all implemented apis
